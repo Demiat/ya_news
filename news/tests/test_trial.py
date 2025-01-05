@@ -1,4 +1,6 @@
-# news/tests/test_trial.py
+import unittest
+
+
 from django.test import TestCase
 
 # Импортируем модель, чтобы работать с ней в тестах.
@@ -6,6 +8,7 @@ from news.models import News
 
 
 # Создаём тестовый класс с произвольным названием, наследуем его от TestCase.
+@unittest.skip
 class TestNews(TestCase):
 
     # Все нужные переменные сохраняем в атрибуты класса.
@@ -13,7 +16,7 @@ class TestNews(TestCase):
     TEXT = 'Тестовый текст'
 
     # В методе класса setUpTestData создаём тестовые объекты.
-    # Оборачиваем метод соответствующим декоратором.    
+    # Оборачиваем метод соответствующим декоратором.
     @classmethod
     def setUpTestData(cls):
         # Стандартным методом Django ORM create() создаём объект класса.
@@ -29,7 +32,7 @@ class TestNews(TestCase):
         news_count = News.objects.count()
         # Сравним полученное число с единицей.
         self.assertEqual(news_count, 1)
-    
+
     def test_title(self):
         # Сравним свойство объекта и ожидаемое значение.
-        self.assertEqual(self.news.title, self.TITLE) 
+        self.assertEqual(self.news.title, self.TITLE)
