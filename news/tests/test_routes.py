@@ -45,10 +45,10 @@ class TestRoutes(TestCase):
 
     def test_comment_pages(self):
         urls = (
-            ('news:detail', (self.comment.id,)),
+            ('news:edit', (self.comment.id,)),
         )
         for name, args in urls:
             with self.subTest(name=name):
                 url = reverse(name, args=args)
-                response = self.reader_client.get(url)
+                response = self.reader_client.get(url, args=args)
                 self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
