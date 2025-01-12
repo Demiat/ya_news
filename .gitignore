@@ -1,3 +1,5 @@
+.vscode/
+news/tests/
 .git/*
 env/
 venv/
