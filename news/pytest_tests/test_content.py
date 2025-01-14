@@ -1,5 +1,4 @@
 import pytest
-
 from django.conf import settings
 from django.urls import reverse
 
@@ -33,18 +32,19 @@ class TestDetailPage:
 
     @pytest.mark.usefixtures('comment_list')
     def test_comments_order(self, news):
+        """Проверяет сортировку списка комментариев"""
         all_comments = news.comment_set.all()
         all_timestamps = [comment.created for comment in all_comments]
         sorted_timestamps = sorted(all_timestamps)
         assert all_timestamps == sorted_timestamps
 
-    def test_anonymous_client_has_no_form(self, client, news_id):
+    def test_anonymous_client_has_no_form(self, client, news_url):
         """Наличие формы у анонима"""
-        response = client.get(reverse('news:detail', args=news_id))
+        response = client.get(news_url)
         assert 'form' not in response.context
 
-    def test_authorized_client_has_form(self, author_client, news_id):
+    def test_authorized_client_has_form(self, author_client, news_url):
         """Наличие формы у авторизованного пользователя"""
-        response = author_client.get(reverse('news:detail', args=news_id))
+        response = author_client.get(news_url)
         assert 'form' in response.context
         assert isinstance(response.context['form'], CommentForm)
